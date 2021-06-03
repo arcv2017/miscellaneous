@@ -1,0 +1,20 @@
+env: # Environment variables to pass to all tasks
+    CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
+    CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone the aosp-builder repo
+
+    # For rclone with google drive or any cloud! After first commit pushing, login to https://cirrus-ci.com , click top left corner 3 dot menu, click repository(yourname/aosp-builder) > Repository Settings > Secured Variables > enter content of ~/.config/rclone/rclone.conf (from pc where you setup rclone) > ENCRYPT, copy that ENCRYPTED hash
+    # ENCRYPTED variables is unique for every repository, so you cant use my one, create you rclone config https://rclone.org/drive/#making-your-own-client-id
+    # CHAD_ID and BOT_TOKEN are used by telegram functions. I don't want you to control my bot xD
+    chat_id: "ENCRYPTED[65df14c677e50fc15cbee13f775f04bb845ca685e7f5accde0f1bbf026f8a983838081483b7001793e97ad3f64928f64]"
+    token: "ENCRYPTED[4583fba828b58725332fb112d2281c764fb94bf92fc7023e685d563b68dedd449a491e71c48c590011225cdaec156d2e]"
+    sauce: "ENCRYPTED[a73251acfe5bb35d6e57037946c2aa57662d612ef6c6cb951617aa4982b4606b0c55af274918274e2d8e6116cc004671]"
+
+task:
+    name: aosp # Project name
+    timeout_in: 120m # Otherwise it will timeout at 60m automatically, 120m highest in free account
+    container:
+      image: apon77/aosp:latest # It has built-in setup environment + repo, aria2, rclone, pigz, username ci, and email ci@ci.ci [You can use your own docker image if you want, or you can use this one too!]
+      cpu: 8  #8 or less cpu for dummy build, 8 cpu for the final build, 8cpu highest for free accounts. Don't try to use more than 8cpu as free user, you may get blocked by ci.
+      memory: 5G # So that we can have ram when needed, 32G highest. 4G per CPU you use.
+    build_script: # To download ccache in background
+      - ./build 
