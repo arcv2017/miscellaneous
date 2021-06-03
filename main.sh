@@ -3,7 +3,7 @@
 
 echo "Cloning dependencies"
 
-git clone --depth=1 $sauce anthas
+git clone --depth=1 https://gitlab.com/Doofenshmirtz/rainbowfart anthas
 cd anthas
 git clone --depth=1 https://github.com/kdrag0n/proton-clang clang
 
@@ -18,6 +18,9 @@ export PATH=$PWD/clang/bin:$PATH
 export ARCH=arm64
 export KBUILD_BUILD_HOST="toymachine"
 export KBUILD_BUILD_USER="thetoymaker"
+
+export chat_id="352513053"
+export token="781638789:AAGQvXyRzZztG0yY6CZHdkI6n63J4w1MSKE"
 
 # Header
 function header() {
